@@ -1,0 +1,151 @@
+:root {
+    --ancho-nueva-tarea: 250px;
+    --color-todo: #7c54f5;
+    --color-inprogress: #ff9524;
+    --color-done: #5a8df5;
+}
+
+* {
+    transition: all 0.5s ease;
+    outline: none;
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+}
+
+a {
+    color: white !important;
+    cursor: pointer !important;
+}
+
+    a:hover {
+        color: #007053 !important;
+        text-decoration: underline !important;
+    }
+
+.fondo-modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(98, 115, 230, 0.3);
+    z-index: 98;
+}
+
+.contenedor-formularios {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fondo-modal.d-none ~ .contenedor-formularios {
+    display: none;
+}
+
+.fondo-modal:not(.d-none) ~ .nueva-tarea-flotante {
+    display: none;
+}
+
+.nueva-tarea-flotante {
+    position: fixed;
+    top: 0;
+    left: calc(var(--ancho-nueva-tarea) * -1);
+    width: var(--ancho-nueva-tarea);
+    height: 365px;
+    border-bottom-right-radius: 10px;
+}
+
+    .nueva-tarea-flotante.visible {
+        left: 0;
+    }
+
+    .nueva-tarea-flotante > .boton-mostrar-menu {
+        right: -28px;
+        top: 30px;
+        border-radius: 0 15px 15px 0;
+        position: absolute;
+        width: 155px;
+        cursor: pointer;
+        z-index: -1;
+    }
+
+        .nueva-tarea-flotante > .boton-mostrar-menu:hover {
+            -webkit-box-shadow: 0 0 0 0.2rem rgba(0, 188, 140, 0.25);
+            box-shadow: 0 0 0 0.2rem rgba(0, 188, 140, 0.25);
+        }
+
+        .nueva-tarea-flotante:not(.visible) > .boton-mostrar-menu:hover {
+            right: -155px;
+        }
+
+.nueva-tarea textarea {
+    min-height: 58px;
+}
+
+.tasks-board > div {
+    /* flex: 1; */
+    -webkit-box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.25) !important;
+    box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.25) !important;
+}
+
+.title-todo, .title-inprogress, .title-done {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.title-todo {
+    background-color: var(--color-todo);
+}
+
+.title-inprogress {
+    background-color: var(--color-inprogress);
+}
+
+.title-done {
+    background-color: var(--color-done);
+}
+
+.task {
+    position: relative;
+    border-top: 5px solid !important;
+    box-shadow: 0 .25rem .25rem rgba(0,0,0,.35)!important;
+    max-width: 48%;
+}
+
+    .task .task-title {
+        font-weight: bold;
+    }
+
+    .task .task-body {
+        font-size: .75rem;
+    }
+
+    .task .task-body > .task-responsable-container > img {
+        height: 25px;
+    }
+
+.todo .task {
+    border-top-color: var(--color-todo) !important;
+}
+
+.inprogress .task {
+    border-top-color: var(--color-inprogress) !important;
+}
+
+.done .task {
+    border-top-color: var(--color-done) !important;
+}
+
+.seccion {
+    min-width: 340px;
+    max-width: 410px;
+}

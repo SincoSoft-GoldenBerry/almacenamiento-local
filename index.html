@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Almacenamiento Local</title>
+    <script>
+        var redirect = function() { window.location.href = 'warning.html'; };
+        try {
+            eval('() => {}');
+        }
+        catch(e){
+            redirect();
+        }
+
+        if (!window['openDatabase']) redirect();
+
+    </script>
+    <link rel="stylesheet" type="text/css" href="styles/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="styles/all.min.css" />
+    <link rel="stylesheet" type="text/css" href="styles/index.css" />
+    
+    <script src="scripts/jquery-3.3.1.slim.min.js"></script>
+    <script src="scripts/popper.min.js"></script>
+    <script src="scripts/bootstrap.min.js"></script>
+</head>
+<body>
+    <aside class="fondo-modal d-none"></aside>
+    <div class="contenedor-formularios">
+        <div class="jumbotron bg-success my-0 mx-0 px-5 py-5 col-4">
+            <form class="sign-in">
+                <div class="form-group">
+                    <h3>Ingreso</h3>
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-control" required data-field="usuario" placeholder="Correo electrónico" />
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" required data-field="contrasena" placeholder="Contraseña" />
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt mr-1"></i> Ingresar</button>
+                    <a>Registrarme</a>
+                </div>
+            </form>
+            <form class="sign-up d-none">
+                <div class="form-group">
+                    <h3>Registro</h3>
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-control" required data-field="usuario" placeholder="Correo electrónico" />
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" required placeholder="Contraseña" />
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control is-invalid" required data-field="contrasena" aria-describedby="email-validate" placeholder="Confirme la contraseña" />
+                    <small id="email-validate" class="form-text invalid-feedback">La contraseña no coincide.</small>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-user-plus mr-1"></i> Registrarme</button>
+                    <a>Ingresar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <aside class="nueva-tarea-flotante bg-success">
+        <div class="boton-mostrar-menu bg-success px-2 py-1 d-flex flex-row justify-content-between align-items-center"><span>Crear nueva tarea</span> <i class="fas fa-plus-circle"></i></div>
+
+        <section class="contenedor-formulario-tarea px-4 py-4 bg-success">
+            <form class="nueva-tarea">
+                <div class="form-group text-center">
+                    <h4>Nueva tarea</h4>
+                </div>
+                <div class="form-group">
+                    <input type="text" required class="form-control" data-field="titulo" placeholder="Título de la tarea" />
+                </div>
+                <div class="form-group">
+                    <textarea required class="form-control" data-field="descripcion" placeholder="Descripción de la tarea"></textarea>
+                </div>
+                <div class="form-group">
+                    <select class="form-control" data-field="responsable" required>
+                        <option value="">--Responsable--</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="date" required class="form-control" data-field="fecha" placeholder="Fecha límite" />
+                </div>
+                <button type="submit" class="btn btn-primary form-control"><i class="fas fa-plus-circle mr-1"></i> Agregar</button>
+            </form>
+        </section>
+    </aside>
+
+    <section class="row mx-5 d-flex justify-content-center">
+        <div class="row d-flex flex-row justify-content-center align-items-start tasks-board">
+            <div class="mx-3 my-3 border rounded bg-white seccion">
+                <div class="title-todo row m-0 px-3 py-2 rounded-top">
+                    To Do
+                </div>
+                <div class="row todo tasks-container m-0 p-3 d-flex justify-content-start">
+                    <div class="task d-flex flex-column px-4 py-3 m-1 border rounded-sm bg-secondary">
+                        <div class="task-options"></div>
+                        <div class="task-title">Tarea 1</div>
+                        <div class="task-body">
+                            <div class="mt-2">
+                                Descripción de la tarea 1
+                            </div>
+                            <div class="task-responsable-container mt-2">
+                                <img class="border rounded-circle" src="https://sincoerp.com/S5/imagenes/Carlos.jpg" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mx-3 my-3 border rounded bg-white seccion">
+                <div class="title-inprogress row m-0 px-3 py-2 rounded-top">
+                    In Progress
+                </div>
+                <div class="row inprogress tasks-container m-0 p-3 d-flex justify-content-start">
+                </div>
+            </div>
+            <div class="mx-3 my-3 border rounded bg-white seccion">
+                <div class="title-done row m-0 px-3 py-2 rounded-top">
+                    Done
+                </div>
+                <div class="row done tasks-container m-0 p-3 d-flex justify-content-start">
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
