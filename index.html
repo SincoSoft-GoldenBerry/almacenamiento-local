@@ -24,9 +24,11 @@
     <script src="scripts/jquery-3.3.1.slim.min.js"></script>
     <script src="scripts/popper.min.js"></script>
     <script src="scripts/bootstrap.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/SincoSoft-GoldenBerry/S5@master/v2/s5.min.js"></script>
 </head>
 <body>
-    <aside class="fondo-modal d-none"></aside>
+    <aside class="fondo-modal"></aside>
     <div class="contenedor-formularios">
         <div class="jumbotron bg-success my-0 mx-0 px-5 py-5 col-4">
             <form class="sign-in">
@@ -34,13 +36,17 @@
                     <h3>Ingreso</h3>
                 </div>
                 <div class="form-group">
-                    <input type="email" class="form-control" required data-field="usuario" placeholder="Correo electrónico" />
+                    <input type="email" class="form-control" required placeholder="Correo electrónico" />
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" required data-field="contrasena" placeholder="Contraseña" />
+                    <input type="password" class="form-control" required placeholder="Contraseña" />
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" id="recordar" />
+                    <label for="recordar">Mantener iniciada</label>
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt mr-1"></i> Ingresar</button>
+                    <button type="submit" class="btn btn-primary ingresar"><i class="fas fa-sign-in-alt mr-1"></i> Ingresar</button>
                     <a>Registrarme</a>
                 </div>
             </form>
@@ -49,22 +55,32 @@
                     <h3>Registro</h3>
                 </div>
                 <div class="form-group">
-                    <input type="email" class="form-control" required data-field="usuario" placeholder="Correo electrónico" />
+                    <input type="email" class="form-control" required placeholder="Correo electrónico" />
                 </div>
                 <div class="form-group">
                     <input type="password" class="form-control" required placeholder="Contraseña" />
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control is-invalid" required data-field="contrasena" aria-describedby="email-validate" placeholder="Confirme la contraseña" />
+                    <input type="password" class="form-control is-invalid" required aria-describedby="email-validate" placeholder="Confirme la contraseña" />
                     <small id="email-validate" class="form-text invalid-feedback">La contraseña no coincide.</small>
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-user-plus mr-1"></i> Registrarme</button>
+                    <button type="submit" class="btn btn-primary registrar"><i class="fas fa-user-plus mr-1"></i> Registrarme</button>
                     <a>Ingresar</a>
                 </div>
             </form>
         </div>
     </div>
+
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary py-2">
+        <div class="container d-flex justify-content-between">
+            <span class="navbar-brand">Task board</span>
+            <div class="d-flex align-items-center">
+                <span class="usuario mr-2"></span>
+                <button type="button" class="btn btn-sm btn-success salir"><i class="fas fa-sign-out-alt"></i> Salir</button>
+            </div>
+        </div>
+    </nav>
 
     <aside class="nueva-tarea-flotante bg-success">
         <div class="boton-mostrar-menu bg-success px-2 py-1 d-flex flex-row justify-content-between align-items-center"><span>Crear nueva tarea</span> <i class="fas fa-plus-circle"></i></div>
@@ -81,7 +97,8 @@
                     <textarea required class="form-control" data-field="descripcion" placeholder="Descripción de la tarea"></textarea>
                 </div>
                 <div class="form-group">
-                    <select class="form-control" data-field="responsable" required>
+                    <input type="hidden" data-field="creadorId" />
+                    <select class="form-control" data-field="encargadoId" required>
                         <option value="">--Responsable--</option>
                     </select>
                 </div>
@@ -96,39 +113,28 @@
     <section class="row mx-5 d-flex justify-content-center">
         <div class="row d-flex flex-row justify-content-center align-items-start tasks-board">
             <div class="mx-3 my-3 border rounded bg-white seccion">
-                <div class="title-todo row m-0 px-3 py-2 rounded-top">
-                    To Do
+                <div class="title-todo row m-0 px-3 py-2 rounded-top d-flex align-items-center">
+                    <i class="fas fa-tasks pr-2"></i>To Do
                 </div>
-                <div class="row todo tasks-container m-0 p-3 d-flex justify-content-start">
-                    <div class="task d-flex flex-column px-4 py-3 m-1 border rounded-sm bg-secondary">
-                        <div class="task-options"></div>
-                        <div class="task-title">Tarea 1</div>
-                        <div class="task-body">
-                            <div class="mt-2">
-                                Descripción de la tarea 1
-                            </div>
-                            <div class="task-responsable-container mt-2">
-                                <img class="border rounded-circle" src="https://sincoerp.com/S5/imagenes/Carlos.jpg" />
-                            </div>
-                        </div>
-                    </div>
+                <div class="row todo tasks-container m-0 p-3 d-flex justify-content-start align-items-start" data-type="todo">
                 </div>
             </div>
             <div class="mx-3 my-3 border rounded bg-white seccion">
-                <div class="title-inprogress row m-0 px-3 py-2 rounded-top">
-                    In Progress
+                <div class="title-inprogress row m-0 px-3 py-2 rounded-top d-flex align-items-center">
+                    <i class="fas fa-tasks pr-2"></i>In Progress
                 </div>
-                <div class="row inprogress tasks-container m-0 p-3 d-flex justify-content-start">
+                <div class="row inprogress tasks-container m-0 p-3 d-flex justify-content-start align-items-start" data-type="progress">
                 </div>
             </div>
             <div class="mx-3 my-3 border rounded bg-white seccion">
-                <div class="title-done row m-0 px-3 py-2 rounded-top">
-                    Done
+                <div class="title-done row m-0 px-3 py-2 rounded-top d-flex align-items-center">
+                    <i class="fas fa-tasks pr-2"></i>Done
                 </div>
-                <div class="row done tasks-container m-0 p-3 d-flex justify-content-start">
+                <div class="row done tasks-container m-0 p-3 d-flex justify-content-start align-items-start" data-type="done">
                 </div>
             </div>
         </div>
     </section>
+    <script src="scripts/modules/main.js"></script>
 </body>
 </html>
