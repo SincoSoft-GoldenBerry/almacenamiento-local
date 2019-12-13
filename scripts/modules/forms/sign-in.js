@@ -5,7 +5,7 @@ myApp.define('forms/sign-in', ['forms/sign-up', 'services', 'storage/cookie'], (
     const botonIngreso = formularioIngreso.get('.ingresar').shift();
     const email = formularioIngreso.get('input[type=email]').shift();
     const password = formularioIngreso.get('input[type=password]').shift();
-    const recordar = s5.get('recordar');
+    const recordar = formularioIngreso.get('recordar');
     const registrarse = s5.get('.sign-in a').shift();
     const mensaje = formularioIngreso.get('.mensaje').shift();
 

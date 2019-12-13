@@ -1,9 +1,9 @@
 myApp.define('tasks/new', ['services'], (services) => {
     let usuario, mostrarTarea;
-    const botonMostrarFormulario = s5.get('.boton-mostrar-menu').shift();
     const contenedorFormulario = s5.get('.nueva-tarea-flotante').shift();
+    const botonMostrarFormulario = contenedorFormulario.get('.boton-mostrar-menu').shift();
     const iconoBoton = botonMostrarFormulario.get('.fas').shift();
-    const formulario = s5.get('.nueva-tarea').shift();
+    const formulario = contenedorFormulario.get('.nueva-tarea').shift();
     const botonAgregar = formulario.get('.btn').shift();
     const controles = formulario.get('input, textarea, select');
     const responsables = formulario.get('[data-field=encargadoId]').shift();

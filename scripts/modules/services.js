@@ -1,7 +1,6 @@
 myApp.define('services', ['dataBase/main'], (dataBase) => {
 
-    const fechaActual = f => {
-        const d = f || new Date();
+    const fechaActual = (d = new Date()) => {
         return `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`;
     };
 
