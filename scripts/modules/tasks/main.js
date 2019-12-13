@@ -1,10 +1,10 @@
-myApp.define('tasks/main', ['services', 'tasks/new'], ({ serviciosTareas: services }, newTask) => {
+myApp.define('tasks/main', ['services', 'tasks/new'], ({ serviciosTareas: services }, { start }) => {
     let tasks = [];
 
     const taskContainers = s5.get('.tasks-container');
 
     const load = usr => {
-        newTask.start(usr, mostrarTarea);
+        start(usr, mostrarTarea);
         services.obtenerTareasUsuario(usr.id, _tasks => {
             tasks = _tasks;
             mostrarTareas();
@@ -23,19 +23,19 @@ myApp.define('tasks/main', ['services', 'tasks/new'], ({ serviciosTareas: servic
     };
 
     const mostrarTareas = () => {
-        const html = tasks.reduce((data, task) => {
-            data[task.estado].push(`<div class="task d-flex flex-column px-4 py-3 m-1 border rounded-sm bg-secondary">
-                <div class="task-options ${task.editable ? 'd-flex' : 'd-none'} justify-content-center align-items-center" data-id="${task.id}" data-next="${next[task.estado]}">
+        const html = tasks.reduce((data, { estado, editable, id, titulo, descripcion, fecha, fechaCreacion }) => {
+            data[estado].push(`<div class="task d-flex flex-column px-4 py-3 m-1 border rounded-sm bg-secondary">
+                <div class="task-options ${editable ? 'd-flex' : 'd-none'} justify-content-center align-items-center" data-id="${id}" data-next="${next[estado]}">
                     <i class="far fa-hand-point-right" title="Mover al siguiente estado"></i>
                 </div>
-                <div class="task-title">${task.titulo}</div>
+                <div class="task-title">${titulo}</div>
                 <div class="task-body">
                     <div class="mt-2">
-                        ${task.descripcion}
+                        ${descripcion}
                     </div>
                     <div class="mt-2 d-flex flex-column">
-                        <small><b>Creado: </b>${task.fechaCreacion}</small>
-                        <small><b>Para: </b>${task.fecha}</small>
+                        <small><b>Creado: </b>${fechaCreacion}</small>
+                        <small><b>Para: </b>${fecha}</small>
                     </div>
                     <div class="task-responsable-container mt-2">
                         <img class="border rounded-circle" src="https://sincoerp.com/S5/imagenes/Carlos.jpg" />

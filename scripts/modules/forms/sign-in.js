@@ -1,4 +1,4 @@
-myApp.define('forms/sign-in', ['forms/sign-up', 'services', 'storage/cookie'], (signUp, { serviciosUsuario: services }, cookie) => {
+myApp.define('forms/sign-in', ['forms/sign-up', 'services', 'storage/cookie'], ({ start }, { serviciosUsuario: services }, { getCookie, setCookie }) => {
     let storage, mostrarUsuario;
     const formularios = s5.get('.sign-in, .sign-up');
     const formularioIngreso = formularios[0];
@@ -16,8 +16,8 @@ myApp.define('forms/sign-in', ['forms/sign-up', 'services', 'storage/cookie'], (
             e.stopImmediatePropagation();
         }));
         botonIngreso.addEvent('click', validarUsuario);
-        registrarse.addEvent('click', signUp.start(formularios));
-        recordar.checked = cookie.getCookie() === 'local';
+        registrarse.addEvent('click', start(formularios));
+        recordar.checked = getCookie() === 'local';
     };
 
     const validarUsuario = () => {
@@ -25,7 +25,7 @@ myApp.define('forms/sign-in', ['forms/sign-up', 'services', 'storage/cookie'], (
             services.obtenerUsuario(email.value, password.value, usuario => {
                 if (usuario) {
                     const type = recordar.checked ? 'local': 'session';
-                    cookie.setCookie(type);
+                    setCookie(type);
                     storage.setManager(type);
                     storage.setUser(usuario);
                     mostrarUsuario(usuario);
