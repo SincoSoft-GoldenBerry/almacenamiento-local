@@ -27,24 +27,19 @@ myApp.define('services', ['dataBase/main'], ({ selectFirst, select, insert }) =>
                 correo: row['correo']
             }), fnNext),
             obtenerUsuarios: fnNext => select('SELECT * FROM usuario', row => ({ id: row['id'], nombre: row['nombre'], apellidos: row['apellidos'] }), fnNext),
-            registrarUsuario: (usuario, fnNext) => insert('INSERT INTO usuario(nombre, apellidos, correo, contrasena) VALUES (?,?,?,?)', [
-                usuario.nombre,
-                usuario.apellidos,
-                usuario.correo,
-                usuario.contrasena
-            ], fnNext)
+            registrarUsuario: ({ nombre, apellidos, correo, contrasena }, fnNext) => insert('INSERT INTO usuario(nombre, apellidos, correo, contrasena) VALUES (?,?,?,?)', [ nombre, apellidos, correo, contrasena ], fnNext)
         },
         serviciosTareas: {
             obtenerTareasUsuario: (idUsuario, fnNext) => select(`SELECT * FROM task WHERE creadorId = ${idUsuario} OR encargadoId = ${idUsuario}`, tarea(idUsuario), fnNext),
-            agregarTarea: (task, fnNext) => insert('INSERT INTO task(titulo, descripcion, estado, encargadoId, creadorId, fecha, fechaCreacion) VALUES(?,?,?,?,?,?,?)', [
-                task.titulo,
-                task.descripcion,
+            agregarTarea: ({ titulo, descripcion, encargadoId, creadorId, fecha }, fnNext) => insert('INSERT INTO task(titulo, descripcion, estado, encargadoId, creadorId, fecha, fechaCreacion) VALUES(?,?,?,?,?,?,?)', [
+                titulo,
+                descripcion,
                 'todo',
-                task.encargadoId,
-                task.creadorId,
-                formatearFecha(task.fecha),
+                encargadoId,
+                creadorId,
+                formatearFecha(fecha),
                 fechaActual()
-            ], result => selectFirst(`SELECT * FROM task WHERE id = ${result.insertId}`, tarea(task.creadorId), fnNext)),
+            ], result => selectFirst(`SELECT * FROM task WHERE id = ${result.insertId}`, tarea(creadorId), fnNext)),
             actualizarEstado: (taskId, taskEstado, fnNext) => insert('UPDATE task SET estado = ? WHERE id = ?', [taskEstado, taskId], fnNext)
         }
     };
