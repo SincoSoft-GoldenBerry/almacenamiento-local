@@ -1,10 +1,9 @@
 myApp.define('tasks/main', ['services', 'tasks/new'], (services, newTask) => {
-    let usuario, tasks = [];
+    let tasks = [];
 
     const taskContainers = s5.get('.tasks-container');
 
     const load = usr => {
-        usuario = usr;
         newTask.start(usr, mostrarTarea);
         services.obtenerTareasUsuario(usr.id, _tasks => {
             tasks = _tasks;

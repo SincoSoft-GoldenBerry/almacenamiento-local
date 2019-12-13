@@ -28,8 +28,14 @@ myApp.define('services', ['dataBase/main'], (dataBase) => {
             apellidos: row['apellidos'],
             correo: row['correo']
         }), fnNext),
-        obtenerTareasUsuario: (idUsuario, fnNext) => dataBase.select(`SELECT * FROM task WHERE creadorId = ${idUsuario} OR encargadoId = ${idUsuario}`, tarea(idUsuario), fnNext),
         obtenerUsuarios: fnNext => dataBase.select('SELECT * FROM usuario', row => ({ id: row['id'], nombre: row['nombre'], apellidos: row['apellidos'] }), fnNext),
+        registrarUsuario: (usuario, fnNext) => dataBase.insert('INSERT INTO usuario(nombre, apellidos, correo, contrasena) VALUES (?,?,?,?)', [
+            usuario.nombre,
+            usuario.apellidos,
+            usuario.correo,
+            usuario.contrasena
+        ], fnNext),
+        obtenerTareasUsuario: (idUsuario, fnNext) => dataBase.select(`SELECT * FROM task WHERE creadorId = ${idUsuario} OR encargadoId = ${idUsuario}`, tarea(idUsuario), fnNext),
         agregarTarea: (task, fnNext) => dataBase.insert('INSERT INTO task(titulo, descripcion, estado, encargadoId, creadorId, fecha, fechaCreacion) VALUES(?,?,?,?,?,?,?)', [
             task.titulo,
             task.descripcion,

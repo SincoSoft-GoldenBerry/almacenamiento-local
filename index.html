@@ -49,20 +49,30 @@
                     <button type="submit" class="btn btn-primary ingresar"><i class="fas fa-sign-in-alt mr-1"></i> Ingresar</button>
                     <a>Registrarme</a>
                 </div>
+                <div class="form-group mensaje d-none mb-0 mt-3">
+                    <small class="form-text text-white">Usuario o contraseña incorrectos.</small>
+                </div>
             </form>
             <form class="sign-up d-none">
                 <div class="form-group">
                     <h3>Registro</h3>
                 </div>
                 <div class="form-group">
-                    <input type="email" class="form-control" required placeholder="Correo electrónico" />
+                    <input type="text" class="form-control" required placeholder="Nombre" data-field="nombre" />
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" required placeholder="Contraseña" />
+                    <input type="text" class="form-control" required placeholder="Apellidos" data-field="apellidos" />
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control is-invalid" required aria-describedby="email-validate" placeholder="Confirme la contraseña" />
-                    <small id="email-validate" class="form-text invalid-feedback">La contraseña no coincide.</small>
+                    <input type="email" class="form-control" required placeholder="Correo electrónico" data-field="correo" />
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" required aria-describedby="email-validate1" placeholder="Contraseña" />
+                    <small id="email-validate1" class="form-text invalid-feedback">La contraseña no debe estar vacía.</small>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" required aria-describedby="email-validate2" placeholder="Confirme la contraseña" data-field="contrasena" />
+                    <small id="email-validate2" class="form-text invalid-feedback">La contraseña no coincide.</small>
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                     <button type="submit" class="btn btn-primary registrar"><i class="fas fa-user-plus mr-1"></i> Registrarme</button>

@@ -2,10 +2,12 @@ myApp.define('forms/sign-in', ['forms/sign-up', 'services', 'storage/cookie'], (
     let storage, mostrarUsuario;
     const formularios = s5.get('.sign-in, .sign-up');
     const formularioIngreso = formularios[0];
-    const botonIngreso = s5.get('.ingresar').shift();
-    const email = s5.get('.sign-in input[type=email]').shift();
-    const password = s5.get('.sign-in input[type=password]').shift();
+    const botonIngreso = formularioIngreso.get('.ingresar').shift();
+    const email = formularioIngreso.get('input[type=email]').shift();
+    const password = formularioIngreso.get('input[type=password]').shift();
     const recordar = s5.get('recordar');
+    const registrarse = s5.get('.sign-in a').shift();
+    const mensaje = formularioIngreso.get('.mensaje').shift();
 
     const setEvents = () => {
         formularios.forEach(formulario => formulario.addEvent('submit', e => {
@@ -14,6 +16,7 @@ myApp.define('forms/sign-in', ['forms/sign-up', 'services', 'storage/cookie'], (
             e.stopImmediatePropagation();
         }));
         botonIngreso.addEvent('click', validarUsuario);
+        registrarse.addEvent('click', signUp.start(formularios));
         recordar.checked = cookie.getCookie() === 'local';
     };
 
@@ -27,9 +30,10 @@ myApp.define('forms/sign-in', ['forms/sign-up', 'services', 'storage/cookie'], (
                     storage.setUser(usuario);
                     mostrarUsuario(usuario);
                     s5.get('.fondo-modal').shift().classList.add('d-none');
+                    mensaje.classList.add('d-none');
                 }
                 else {
-                    //Mostrar mensaje
+                    mensaje.classList.remove('d-none');
                 }
             });
         }
