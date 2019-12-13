@@ -1,8 +1,6 @@
 myApp.define('services', ['dataBase/main'], (dataBase) => {
 
-    const fechaActual = (d = new Date()) => {
-        return `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`;
-    };
+    const fechaActual = (d = new Date()) => `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`;
 
     const formatearFecha = f => {
         const d = new Date(f);
