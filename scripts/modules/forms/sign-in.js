@@ -1,4 +1,4 @@
-myApp.define('forms/sign-in', ['forms/sign-up', 'services', 'storage/cookie'], (signUp, services, cookie) => {
+myApp.define('forms/sign-in', ['forms/sign-up', 'services', 'storage/cookie'], (signUp, { serviciosUsuario: services }, cookie) => {
     let storage, mostrarUsuario;
     const formularios = s5.get('.sign-in, .sign-up');
     const formularioIngreso = formularios[0];

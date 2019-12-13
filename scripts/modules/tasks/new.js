@@ -1,4 +1,4 @@
-myApp.define('tasks/new', ['services'], (services) => {
+myApp.define('tasks/new', ['services'], ({ serviciosTareas: tasks, serviciosUsuario: users }) => {
     let usuario, mostrarTarea;
     const contenedorFormulario = s5.get('.nueva-tarea-flotante').shift();
     const botonMostrarFormulario = contenedorFormulario.get('.boton-mostrar-menu').shift();
@@ -36,7 +36,7 @@ myApp.define('tasks/new', ['services'], (services) => {
         if (formulario.checkValidity()) {
             const task = {};
             controles.forEach(control => task[control.dataset.field] = control.value);
-            services.agregarTarea(task, taskNew => {
+            tasks.agregarTarea(task, taskNew => {
                 mostrarTarea(taskNew);
                 formulario.reset();
             });
@@ -44,7 +44,7 @@ myApp.define('tasks/new', ['services'], (services) => {
     };
 
     const cargarResponsables = () => 
-        services.obtenerUsuarios(data => data.forEach(responsable => 
+        users.obtenerUsuarios(data => data.forEach(responsable => 
             responsables.insert(
                 s5.createElem('option', { 'value': responsable.id })
                     .insert(document.createTextNode(`${responsable.nombre} ${responsable.apellidos}`))

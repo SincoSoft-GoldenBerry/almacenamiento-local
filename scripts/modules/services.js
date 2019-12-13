@@ -19,29 +19,33 @@ myApp.define('services', ['dataBase/main'], dataBase => {
     });
 
     return {
-        obtenerUsuario: (usuario, pass, fnNext) => dataBase.selectFirst(`SELECT * FROM usuario WHERE correo = "${usuario}" AND contrasena = "${pass}"`, row => ({
-            id: row['id'],
-            nombre: row['nombre'],
-            apellidos: row['apellidos'],
-            correo: row['correo']
-        }), fnNext),
-        obtenerUsuarios: fnNext => dataBase.select('SELECT * FROM usuario', row => ({ id: row['id'], nombre: row['nombre'], apellidos: row['apellidos'] }), fnNext),
-        registrarUsuario: (usuario, fnNext) => dataBase.insert('INSERT INTO usuario(nombre, apellidos, correo, contrasena) VALUES (?,?,?,?)', [
-            usuario.nombre,
-            usuario.apellidos,
-            usuario.correo,
-            usuario.contrasena
-        ], fnNext),
-        obtenerTareasUsuario: (idUsuario, fnNext) => dataBase.select(`SELECT * FROM task WHERE creadorId = ${idUsuario} OR encargadoId = ${idUsuario}`, tarea(idUsuario), fnNext),
-        agregarTarea: (task, fnNext) => dataBase.insert('INSERT INTO task(titulo, descripcion, estado, encargadoId, creadorId, fecha, fechaCreacion) VALUES(?,?,?,?,?,?,?)', [
-            task.titulo,
-            task.descripcion,
-            'todo',
-            task.encargadoId,
-            task.creadorId,
-            formatearFecha(task.fecha),
-            fechaActual()
-        ], result => dataBase.selectFirst(`SELECT * FROM task WHERE id = ${result.insertId}`, tarea(task.creadorId), fnNext)),
-        actualizarEstado: (taskId, taskEstado, fnNext) => dataBase.insert('UPDATE task SET estado = ? WHERE id = ?', [taskEstado, taskId], fnNext)
+        serviciosUsuario: {
+            obtenerUsuario: (usuario, pass, fnNext) => dataBase.selectFirst(`SELECT * FROM usuario WHERE correo = "${usuario}" AND contrasena = "${pass}"`, row => ({
+                id: row['id'],
+                nombre: row['nombre'],
+                apellidos: row['apellidos'],
+                correo: row['correo']
+            }), fnNext),
+            obtenerUsuarios: fnNext => dataBase.select('SELECT * FROM usuario', row => ({ id: row['id'], nombre: row['nombre'], apellidos: row['apellidos'] }), fnNext),
+            registrarUsuario: (usuario, fnNext) => dataBase.insert('INSERT INTO usuario(nombre, apellidos, correo, contrasena) VALUES (?,?,?,?)', [
+                usuario.nombre,
+                usuario.apellidos,
+                usuario.correo,
+                usuario.contrasena
+            ], fnNext)
+        },
+        serviciosTareas: {
+            obtenerTareasUsuario: (idUsuario, fnNext) => dataBase.select(`SELECT * FROM task WHERE creadorId = ${idUsuario} OR encargadoId = ${idUsuario}`, tarea(idUsuario), fnNext),
+            agregarTarea: (task, fnNext) => dataBase.insert('INSERT INTO task(titulo, descripcion, estado, encargadoId, creadorId, fecha, fechaCreacion) VALUES(?,?,?,?,?,?,?)', [
+                task.titulo,
+                task.descripcion,
+                'todo',
+                task.encargadoId,
+                task.creadorId,
+                formatearFecha(task.fecha),
+                fechaActual()
+            ], result => dataBase.selectFirst(`SELECT * FROM task WHERE id = ${result.insertId}`, tarea(task.creadorId), fnNext)),
+            actualizarEstado: (taskId, taskEstado, fnNext) => dataBase.insert('UPDATE task SET estado = ? WHERE id = ?', [taskEstado, taskId], fnNext)
+        }
     };
 });

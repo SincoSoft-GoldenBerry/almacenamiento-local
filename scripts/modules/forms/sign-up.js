@@ -1,4 +1,4 @@
-myApp.define('forms/sign-up', ['services'], services => {
+myApp.define('forms/sign-up', ['services'], ({ serviciosUsuario: services }) => {
     let formularios;
     const botonRegistro = s5.get('.registrar').shift();
     const controles = s5.get('.sign-up input[data-field]');

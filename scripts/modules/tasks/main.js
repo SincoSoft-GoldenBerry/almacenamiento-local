@@ -1,4 +1,4 @@
-myApp.define('tasks/main', ['services', 'tasks/new'], (services, newTask) => {
+myApp.define('tasks/main', ['services', 'tasks/new'], ({ serviciosTareas: services }, newTask) => {
     let tasks = [];
 
     const taskContainers = s5.get('.tasks-container');
